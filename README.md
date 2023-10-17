@@ -12,7 +12,7 @@ struct Entity {
 };
 ```
 
-<img align="left" src="https://github.com/nullstare/Raylib_Simple_Entity_System/screenshot.png" width="1024px">
+![alt text](https://github.com/nullstare/Raylib_Simple_Entity_System/blob/main/screenshot.png?raw=true)
 
 ## Building
 
