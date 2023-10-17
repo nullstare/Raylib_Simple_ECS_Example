@@ -1,0 +1,18 @@
+{
+	"files.associations": {
+		"main.h": "c",
+		"process.h": "c",
+		"player.h": "c",
+		"ecs.h": "c",
+		"chrono": "c",
+		"random": "c",
+		"limits": "c",
+		"semaphore": "c",
+		"valarray": "c",
+		"algorithm": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"span": "c"
+	}
+}
