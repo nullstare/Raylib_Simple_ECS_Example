@@ -12,6 +12,8 @@ struct Entity {
 };
 ```
 
+<img align="left" src="https://github.com/nullstare/Raylib_Simple_Entity_System/screenshot.png" width="1024px">
+
 ## Building
 
 If compiling statically, move libraylib.a to "lib" folder. To build do the usual.
