@@ -1,7 +1,7 @@
 #include "main.h"
 #include "player.h"
 #include "enemy.h"
-#include "ecs.h"
+#include "entity_system.h"
 
 static void centerWindow( Vector2 windowSize, int monitor ) {
 	Vector2 monitorSize = (Vector2){ GetMonitorWidth( monitor ), GetMonitorHeight( monitor ) };
@@ -16,18 +16,18 @@ static void centerWindow( Vector2 windowSize, int monitor ) {
 int main() {
 	Vector2 windowSize = (Vector2){ 1024, 720 };
 
-	InitWindow( windowSize.x, windowSize.y, "ECS Test");
+	InitWindow( windowSize.x, windowSize.y, "Entity System Test");
 	centerWindow( windowSize, 0 );
 	SetTargetFPS( 60 );
 
-	ecsInit();
+	esInit();
 
 	playerInit( (Vector2){ 20, 96 } );
 	enemyInit( (Vector2){ 720, 300 }, 32.0, 2, RED );
 	enemyInit( (Vector2){ 400, 200 }, 16.0, 1, GREEN );
 
 	while ( !WindowShouldClose() ) {
-		ecsProcess( GetFrameTime() );
+		esProcess( GetFrameTime() );
 
 		/* Add random enemy entity. */
 		if ( IsKeyPressed( KEY_ENTER ) ) {
@@ -46,13 +46,13 @@ int main() {
 
 		BeginDrawing();
 			ClearBackground( RAYWHITE );
-			ecsDraw();
+			esDraw();
 			DrawText( "Press Enter to add random entity and Space when player over enemy to remove entity", 10, 10, 20, BLACK );
 		EndDrawing();
 	}
 	CloseWindow();
 
-	ecsFree();
+	esFree();
 
 	return 1;
 }

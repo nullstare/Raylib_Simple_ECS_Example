@@ -1,5 +1,5 @@
 #include "main.h"
-#include "ecs.h"
+#include "entity_system.h"
 #include "player.h"
 #include "enemy.h"
 
@@ -11,7 +11,7 @@ void playerInit( Vector2 pos ) {
 		.size = 32
 	};
 
-	ecsAddEntity( (Entity){
+	esAddEntity( (Entity){
 		.data = player,
 		.type = ENTITY_TYPE_PLAYER,
 		.process = playerProcess,
@@ -39,13 +39,13 @@ void playerProcess( Entity* entity, float delta ) {
 
 	/* Check to destroy enemy. */
 	if ( IsKeyPressed( KEY_SPACE ) ) {
-		for ( unsigned int i = 0; i < ecs->entityCount; i++ ) {
-			if ( ecs->entities[i].type == ENTITY_TYPE_ENEMY ) {
-				Enemy* enemy = (Enemy*)ecs->entities[i].data;
+		for ( unsigned int i = 0; i < es->entityCount; i++ ) {
+			if ( es->entities[i].type == ENTITY_TYPE_ENEMY ) {
+				Enemy* enemy = (Enemy*)es->entities[i].data;
 
 				if ( CheckCollisionCircleRec( enemy->pos, enemy->radius,
 				(Rectangle){ player->pos.x, player->pos.y, player->size, player->size } ) ) {
-					ecsRemoveEntity( i );
+					esRemoveEntity( i );
 				}
 			}
 		}

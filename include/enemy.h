@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ecs.h"
+#include "entity_system.h"
 
 typedef struct {
 	Vector2 pivot;

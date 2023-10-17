@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 3.9 )
-project( ECS_test )
+project( EntitySystemTest )
 
 # To make web build
 # cmake .. -DCMAKE_TOOLCHAIN_FILE=<YOUR PATH HERE>/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake -DPLATFORM=Web

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "ecs.h"
+#include "entity_system.h"
 #include "enemy.h"
 
 void enemyInit( Vector2 pivot, float radius, float speed, Color color ) {
@@ -14,7 +14,7 @@ void enemyInit( Vector2 pivot, float radius, float speed, Color color ) {
 		.color = color
 	};
 
-	ecsAddEntity( (Entity){
+	esAddEntity( (Entity){
 		.data = enemy,
 		.type = ENTITY_TYPE_ENEMY,
 		.process = enemyProcess,
