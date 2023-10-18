@@ -9,6 +9,7 @@ typedef struct {
 	float phase;
 	float speed;
 	Color color;
+	Texture* texture;
 } Enemy;
 
 void enemyInit( Vector2 pivot, float radius, float speed, Color color );

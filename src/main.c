@@ -2,6 +2,7 @@
 #include "player.h"
 #include "enemy.h"
 #include "entity_system.h"
+#include "resources.h"
 
 static void centerWindow( Vector2 windowSize, int monitor ) {
 	Vector2 monitorSize = (Vector2){ GetMonitorWidth( monitor ), GetMonitorHeight( monitor ) };
@@ -21,6 +22,10 @@ int main() {
 	SetTargetFPS( 60 );
 
 	esInit();
+	resInit();
+
+	resLoadTexture( "../images/player.png" );
+	resLoadTexture( "../images/enemy.png" );
 
 	playerInit( (Vector2){ 20, 96 } );
 	enemyInit( (Vector2){ 720, 300 }, 32.0, 2, RED );
@@ -53,6 +58,7 @@ int main() {
 	CloseWindow();
 
 	esFree();
+	resFree();
 
 	return 1;
 }

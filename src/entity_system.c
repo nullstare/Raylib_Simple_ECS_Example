@@ -15,7 +15,7 @@ static Entity formatEntity() {
 	return entity;
 }
 
-static void checkEntityRealloc( unsigned int id ) {
+static void checkEntityRealloc( int id ) {
 	if ( id == es->entityCount ) {
 		es->entityCount++;
 	}
@@ -30,8 +30,8 @@ static void checkEntityRealloc( unsigned int id ) {
 	}
 }
 
-static unsigned int newEntity() {
-	unsigned int id = 0;
+static int newEntity() {
+	int id = 0;
 
 	for ( id = 0; id < es->entityCount; id++ ) {
 		if ( es->entities[id].data == NULL ) {
@@ -49,18 +49,18 @@ void esInit() {
 	es->entityAlloc = ALLOC_PAGE_SIZE;
 	es->entities = malloc( es->entityAlloc * sizeof( Entity ) );
 
-	for ( unsigned int id = 0; id < es->entityAlloc; id++ ) {
+	for ( int id = 0; id < es->entityAlloc; id++ ) {
 		es->entities[id] = formatEntity();
 	}
 }
 
 void esAddEntity( Entity entity ) {
-	unsigned int id = newEntity();
+	int id = newEntity();
 	entity.id = id;
 	es->entities[id] = entity;
 }
 
-void esRemoveEntity( unsigned int id ) {
+void esRemoveEntity( int id ) {
 	if ( id < es->entityCount && es->entities[id].data != NULL ) {
 		free( es->entities[id].data );
 		es->entities[id] = formatEntity();
@@ -71,7 +71,7 @@ void esRemoveEntity( unsigned int id ) {
 }
 
 void esProcess( float delta ) {
-	for ( unsigned int id = 0; id < es->entityCount; id++ ) {
+	for ( int id = 0; id < es->entityCount; id++ ) {
 		if ( es->entities[id].process != NULL ) {
 			es->entities[id].process( &es->entities[id], delta );
 		}
@@ -79,7 +79,7 @@ void esProcess( float delta ) {
 }
 
 void esDraw() {
-	for ( unsigned int id = 0; id < es->entityCount; id++ ) {
+	for ( int id = 0; id < es->entityCount; id++ ) {
 		if ( es->entities[id].draw != NULL ) {
 			es->entities[id].draw( &es->entities[id] );
 		}
@@ -87,7 +87,7 @@ void esDraw() {
 }
 
 void esFree() {
-	for ( unsigned int id = 0; id < es->entityCount; id++ ) {
+	for ( int id = 0; id < es->entityCount; id++ ) {
 		if ( es->entities[id].data != NULL ) {
 			free( es->entities[id].data );
 		}

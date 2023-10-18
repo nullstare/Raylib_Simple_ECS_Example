@@ -8,7 +8,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/build/ECS_test",
+			"program": "${workspaceFolder}/build/EntitySystemTest",
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

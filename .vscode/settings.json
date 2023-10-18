@@ -13,6 +13,8 @@
 		"array": "c",
 		"string": "c",
 		"string_view": "c",
-		"span": "c"
+		"span": "c",
+		"entity_system.h": "c",
+		"enemy.h": "c"
 	}
 }

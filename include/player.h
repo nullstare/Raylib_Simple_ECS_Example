@@ -7,6 +7,7 @@
 typedef struct {
 	Vector2 pos;
 	float size;
+	Texture* texture;
 } Player;
 
 void playerInit( Vector2 pos );

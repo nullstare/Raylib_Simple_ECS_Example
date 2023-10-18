@@ -1,5 +1,6 @@
 #include "main.h"
 #include "entity_system.h"
+#include "resources.h"
 #include "enemy.h"
 
 void enemyInit( Vector2 pivot, float radius, float speed, Color color ) {
@@ -11,7 +12,8 @@ void enemyInit( Vector2 pivot, float radius, float speed, Color color ) {
 		.radius = radius,
 		.phase = 0.0,
 		.speed = speed,
-		.color = color
+		.color = color,
+		.texture = resGetTexture( "enemy" )
 	};
 
 	esAddEntity( (Entity){
@@ -35,7 +37,22 @@ void enemyProcess( Entity* entity, float delta ) {
 
 void enemyDraw( Entity* entity ) {
 	Enemy* enemy = (Enemy*)entity->data;
+	Texture tex = *enemy->texture;
 	
-	DrawCircle( enemy->pos.x, enemy->pos.y, enemy->radius, enemy->color );
+	if ( enemy->texture != NULL ) {
+		DrawTexturePro(
+			tex,
+			(Rectangle){ 0, 0, tex.width, tex.height },
+			(Rectangle){ enemy->pos.x, enemy->pos.y, enemy->radius * 2, enemy->radius * 2 },
+			(Vector2){ enemy->radius * 2 / 2, enemy->radius * 2 / 2 },
+			0.0,
+			enemy->color
+		);
+	}
+	else {
+		DrawCircle( enemy->pos.x, enemy->pos.y, enemy->radius, enemy->color );
+		TraceLog( LOG_WARNING, "Enemy texture is NULL" );
+	}
+
 	DrawText( TextFormat( "ID: %d", entity->id ), enemy->pos.x - 10, enemy->pos.y - 22 - enemy->radius, 20, BLACK );
 }

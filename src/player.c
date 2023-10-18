@@ -2,13 +2,15 @@
 #include "entity_system.h"
 #include "player.h"
 #include "enemy.h"
+#include "resources.h"
 
 void playerInit( Vector2 pos ) {
 	Player* player = malloc( sizeof( Player ) );
 
 	*player = (Player){
 		.pos = pos,
-		.size = 32
+		.size = 32,
+		.texture = resGetTexture( "player" )
 	};
 
 	esAddEntity( (Entity){
@@ -39,7 +41,7 @@ void playerProcess( Entity* entity, float delta ) {
 
 	/* Check to destroy enemy. */
 	if ( IsKeyPressed( KEY_SPACE ) ) {
-		for ( unsigned int i = 0; i < es->entityCount; i++ ) {
+		for ( int i = 0; i < es->entityCount; i++ ) {
 			if ( es->entities[i].type == ENTITY_TYPE_ENEMY ) {
 				Enemy* enemy = (Enemy*)es->entities[i].data;
 
@@ -55,6 +57,12 @@ void playerProcess( Entity* entity, float delta ) {
 void playerDraw( Entity* entity ) {
 	Player* player = (Player*)entity->data;
 
-	DrawRectangle( player->pos.x, player->pos.y, player->size, player->size, BLUE );
+	if ( player->texture != NULL ) {
+		DrawTexture( *player->texture, player->pos.x, player->pos.y, BLUE );
+	}
+	else {
+		DrawRectangle( player->pos.x, player->pos.y, player->size, player->size, BLUE );
+		TraceLog( LOG_WARNING, "Player texture is NULL" );
+	}
 	DrawText( TextFormat( "Player ID: %d", entity->id ), player->pos.x - 32, player->pos.y - 22, 20, BLACK );
 }
