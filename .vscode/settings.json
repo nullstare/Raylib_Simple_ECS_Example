@@ -15,6 +15,9 @@
 		"string_view": "c",
 		"span": "c",
 		"entity_system.h": "c",
-		"enemy.h": "c"
+		"enemy.h": "c",
+		"format": "c",
+		"sprite.h": "c",
+		"resources.h": "c"
 	}
 }

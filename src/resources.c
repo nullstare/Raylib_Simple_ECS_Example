@@ -33,8 +33,39 @@ static int newTexture() {
 	return id;
 }
 
+static void checkAnimationRealloc( int id ) {
+	if ( id == res->animCount ) {
+		res->animCount++;
+	}
+
+	if ( res->animCount == res->animAlloc ) {
+		res->animAlloc += ALLOC_PAGE_SIZE;
+		res->animations = realloc( res->animations, res->animAlloc * sizeof( SpriteAnimation ) );
+		res->animNames = realloc( res->animNames, res->animAlloc * sizeof( char* ) );
+
+		for ( id = res->animCount; id < res->animAlloc; id++ ) {
+			res->animations[id] = (SpriteAnimation){ 0 };
+			res->animNames[id] = NULL;
+		}
+	}
+}
+
+static int newAnimation() {
+	int id = 0;
+
+	for ( id = 0; id < res->animCount; id++ ) {
+		if ( res->animNames[id] == NULL ) {
+			break;
+		}
+	}
+	checkAnimationRealloc( id );
+
+	return id;
+}
+
 void resInit() {
 	res = malloc( sizeof( Resources ) );
+	/* Textures. */
 	res->textureCount = 0;
 	res->textureAlloc = ALLOC_PAGE_SIZE;
 	res->textures = malloc( res->textureAlloc * sizeof( Texture ) );
@@ -44,14 +75,38 @@ void resInit() {
 		res->textures[id] = (Texture){ 0 };
 		res->textureNames[id] = NULL;
 	}
+	/* Animations. */
+	res->animCount = 0;
+	res->animAlloc = ALLOC_PAGE_SIZE;
+	res->animations = malloc( res->animAlloc * sizeof( SpriteAnimation ) );
+	res->animNames = malloc( res->animAlloc * sizeof( char* ) );
+
+	for ( int id = 0; id < res->animAlloc; id++ ) {
+		res->animations[id] = (SpriteAnimation){ 0 };
+		res->animNames[id] = NULL;
+	}
 }
 
 void resLoadTexture( const char* path ) {
 	int id = newTexture();
 
 	res->textures[id] = LoadTexture( path );
-	res->textureNames[id] = malloc( TextLength( GetFileNameWithoutExt( path ) + 1 ) * sizeof( char ) );
+	res->textureNames[id] = malloc( ( TextLength( GetFileNameWithoutExt( path ) ) + 1 ) * sizeof( char ) );
 	TextCopy( res->textureNames[id], GetFileNameWithoutExt( path ) );
+}
+
+void resLoadAnimation( const char* name, int frameCount, Rectangle* src, Rectangle* dst ) {
+	int id = newAnimation();
+
+	res->animations[id] = (SpriteAnimation){
+		.frameCount = frameCount,
+		.src = malloc( frameCount * sizeof( Rectangle ) ),
+	};
+	for ( int i = 0; i < frameCount; i++ ) {
+		res->animations[id].src[i] = src[i];
+	}
+	res->animNames[id] = malloc( ( TextLength( name ) + 1 ) * sizeof( char ) );
+	TextCopy( res->animNames[id], name );
 }
 
 Texture* resGetTexture( const char* name ) {
@@ -63,7 +118,17 @@ Texture* resGetTexture( const char* name ) {
 	return NULL;
 }
 
+SpriteAnimation* resGetAnimation( const char* name ) {
+	for ( int id = 0; id < res->animCount; id++ ) {
+		if ( TextIsEqual( res->animNames[id], name ) ) {
+			return &res->animations[id];
+		}
+	}
+	return NULL;
+}
+
 void resFree() {
+	/* Textures. */
 	for ( int id = 0; id < res->textureCount; id++ ) {
 		if ( res->textureNames[id] != NULL ) {
 			free( res->textureNames[id] );
@@ -71,6 +136,16 @@ void resFree() {
 	}
 	free( res->textures );
 	free( res->textureNames );
+	/* Animations. */
+	for ( int id = 0; id < res->animCount; id++ ) {
+		if ( res->animNames[id] != NULL ) {
+			free( res->animations[id].src );
+			free( res->animNames[id] );
+		}
+	}
+	free( res->animations );
+	free( res->animNames );
+
 	free( res );
 
 	TraceLog( LOG_INFO, "Resources Freed" );

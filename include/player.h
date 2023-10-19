@@ -1,13 +1,14 @@
 #pragma once
 
 #include "entity_system.h"
+#include "sprite.h"
 
 #define PLAYER_SPEED 150
 
 typedef struct {
 	Vector2 pos;
 	float size;
-	Texture* texture;
+	Sprite sprite;
 } Player;
 
 void playerInit( Vector2 pos );

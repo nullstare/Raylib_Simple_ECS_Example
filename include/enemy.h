@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entity_system.h"
+#include "sprite.h"
 
 typedef struct {
 	Vector2 pivot;
@@ -9,7 +10,7 @@ typedef struct {
 	float phase;
 	float speed;
 	Color color;
-	Texture* texture;
+	Sprite sprite;
 } Enemy;
 
 void enemyInit( Vector2 pivot, float radius, float speed, Color color );
