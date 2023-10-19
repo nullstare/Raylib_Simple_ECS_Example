@@ -27,12 +27,10 @@ int main() {
 	resLoadTexture( "../images/player.png" );
 	resLoadTexture( "../images/enemy.png" );
 
-	Rectangle enemyIdleSrc[1] = { { 0.0, 0.0, 32.0, 32.0 } };
-	Rectangle enemyIdleDst[1] = { { 0.0, 0.0, 32.0, 32.0 } };
-	resLoadAnimation( "idle", 1, enemyIdleSrc, enemyIdleDst );
-	Rectangle enemyAngrySrc[2] = { { 0.0, 0.0, 32.0, 32.0 }, { 32.0, 0.0, 32.0, 32.0 } };
-	Rectangle enemyAngryDst[2] = { { 0.0, 0.0, 32.0, 32.0 }, { 0.0, 0.0, 32.0, 32.0 } };
-	resLoadAnimation( "angry", 2, enemyAngrySrc, enemyAngryDst );
+	Rectangle idle[1] = { { 0.0, 0.0, 32.0, 32.0 } };
+	resLoadAnimation( "idle", 1, idle );
+	Rectangle angry[2] = { { 0.0, 0.0, 32.0, 32.0 }, { 32.0, 0.0, 32.0, 32.0 } };
+	resLoadAnimation( "angry", 2, angry );
 
 	playerInit( (Vector2){ 20, 96 } );
 	enemyInit( (Vector2){ 720, 300 }, 32.0, 2, RED );

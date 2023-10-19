@@ -95,7 +95,7 @@ void resLoadTexture( const char* path ) {
 	TextCopy( res->textureNames[id], GetFileNameWithoutExt( path ) );
 }
 
-void resLoadAnimation( const char* name, int frameCount, Rectangle* src, Rectangle* dst ) {
+void resLoadAnimation( const char* name, int frameCount, Rectangle* src ) {
 	int id = newAnimation();
 
 	res->animations[id] = (SpriteAnimation){

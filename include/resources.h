@@ -22,7 +22,7 @@ extern Resources* res;
 
 void resInit();
 void resLoadTexture( const char* path );
-void resLoadAnimation( const char* name, int frameCount, Rectangle* src, Rectangle* dst );
+void resLoadAnimation( const char* name, int frameCount, Rectangle* src );
 Texture* resGetTexture( const char* name );
 SpriteAnimation* resGetAnimation( const char* name );
 void resFree();
