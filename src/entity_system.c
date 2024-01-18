@@ -11,7 +11,6 @@ static Entity formatEntity() {
 		.process = NULL,
 		.draw = NULL
 	};
-
 	return entity;
 }
 
